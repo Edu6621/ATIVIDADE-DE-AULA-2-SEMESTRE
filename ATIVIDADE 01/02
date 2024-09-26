@@ -1,0 +1,56 @@
+/* 2. Escreva um programa em C que gere números aleatórios para uma matriz quadrada de ordem 9. O
+programa deve conter um menu com as seguintes opções:
+a. Gerar elementos para a matriz
+b. Apresentar os elementos da matriz
+c. Apresentar a média dos valores de uma linha (informada pelo usuário)
+d. Apresentar a média dos valores de uma coluna (informada pelo usuário)
+e. Apresentar a média dos valores da diagonal principal
+f. Apresentar a média dos valores abaixo da diagonal principal
+g. Apresentar a média dos valores acima da diagonal principal
+Procure empregar o uso de funções na solução deste problema. */
+#include <stdio.h>
+#include <stdlib.h>
+void gerar_matriz(){
+    int mat[9][9]; 
+    for (int i=0; i<9; i++){
+        for (int j=0; j<9; j++){
+            mat[i][j] = rand() % 10;
+            printf ("%4i", mat[i][j]);
+        }
+        printf ("\n");
+    }
+}
+
+void apresentar_matriz (int mat[9][9]){
+    for (int i=0; i<9; i++){
+        for (int j=0; j<9; j++){
+            printf ("%4i", mat[i][j]);
+        }
+        printf ("\n");
+    }
+}
+int main() {
+    char opcao;
+    srand(time(NULL));
+    while (1){
+        printf("Selecione uma opção\n");
+        printf("a. Gerar elementos para a matriz\n");
+        printf("b. Apresentar os elementos da matriz\n");
+        printf("c. Apresentar a média dos valores de uma linha (informada pelo usuário)\n");
+        printf("d. Apresentar a média dos valores de uma coluna (informada pelo usuário)\n");
+        printf("e. Apresentar a média dos valores da diagonal principal\n");
+        printf("f. Apresentar a média dos valores abaixo da diagonal principal\n");
+        printf("g. Apresentar a média dos valores acima da diagonal principal\n");
+        scanf ("%c", &opcao);
+        switch (opcao){
+            case 'a':
+            gerar_matriz();
+            break;
+            case 'b':
+            apresentar_matriz(mat);
+            break;
+        }
+    
+        getchar();
+    }   
+}
