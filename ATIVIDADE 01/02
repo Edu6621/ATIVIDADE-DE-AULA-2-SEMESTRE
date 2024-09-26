@@ -28,9 +28,35 @@ void apresentar_matriz (int mat[9][9]){
         }
         printf ("\n");
     }
+    printf ("\n");
+}
+
+void media_linha(int mat[9][9]){
+    float media;
+    int linha, soma=0;
+    printf ("informe a linha : ");
+    scanf ("%i", &linha);
+    for (int i=0; i<9; i++){
+        soma+=mat[linha][i];
+    }
+    media=soma/9.0;
+    printf ("a media da linha é :%.2f\n", media);
+}
+
+void media_coluna(int mat[9][9]){
+    float media;
+    int coluna, soma=0;
+    printf ("informe a coluna : ");
+    scanf ("%i", &coluna);
+    for (int i=0; i<9; i++){
+        soma+=mat[i][coluna];
+    }
+    media=soma/9.0;
+    printf ("a media da coluna é :%.2f\n", media);
 }
 int main() {
     char opcao;
+    int mat[9][9];
     srand(time(NULL));
     while (1){
         printf("Selecione uma opção\n");
@@ -44,13 +70,23 @@ int main() {
         scanf ("%c", &opcao);
         switch (opcao){
             case 'a':
-            gerar_matriz();
+                for (int i=0; i<9; i++){
+                    for (int j=0; j<9; j++){
+                        mat[i][j] = rand() % 10;
+                    }
+                }        
             break;
             case 'b':
             apresentar_matriz(mat);
             break;
+            case 'c':
+            media_linha(mat);
+            break;
+            case 'd':
+            media_coluna(mat);
+            break;
         }
     
         getchar();
-    }   
+    }
 }
