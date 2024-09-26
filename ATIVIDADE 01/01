@@ -1,1 +1,26 @@
+/*1. Desenvolva um programa em C que contenha uma função que receba uma string e retorne a quantidade de
+vogais presentes nela. No programa principal, solicite ao usuário que insira a string e exiba o resultado da
+função.*/
+#include <stdio.h>
+#include <string.h>
+int str (char *string){
+    int i=0;
+    int quantidade=0;
 
+    while (string[i] != '\0'){
+        if (string[i] == 'a' || string[i] == 'e' || string[i] == 'i' || string[i] == 'o' || string[i] == 'u' ||
+           string[i] == 'A' || string[i] == 'E' || string[i] == 'I' || string[i] == 'O' || string[i] == 'U'){
+            quantidade++;
+        }
+        i++;
+    }
+    return quantidade;
+}
+int main () {
+    int qtd;
+    char string[50];
+    printf ("informe uma string : ");
+    fgets (string, sizeof(string), stdin);
+    qtd = str(string);
+    printf ("a quantidade de vogais é : %i", qtd);
+}
