@@ -1,0 +1,115 @@
+/*
+4. A prefeitura de uma pequena cidade do interior contratou você para desenvolver um software para
+armazenar e processar alguns dados de amostra de uma consulta municipal. O programa deve registrar os
+seguintes dados para 200 famílias:
+
+    • Renda familiar
+    • Número de filhos
+    • Número de animais de estimação
+
+Escreva um programa em C que contenha uma matriz de tamanho 200 x 3 para armazenar os dados
+descritos acima, onde a primeira coluna representa a renda familiar, a segunda coluna representa o número
+de filhos e a terceira coluna representa o número de animais de estimação. Para fins de teste, estes dados
+devem ser gerados de forma aleatória, onde:
+    • O salário deve variar entre R$ 500 e R$ 20.000;
+    • O número de filhos deve variar entre 0 e 12;
+    • O número de animais de estimação deve variar entre 0 a 5.
+
+O programa deve conter um menu de opções para apresentar os seguintes dados:
+
+a. A média de salário da população;
+b. A maior e a menor renda familiar e a quais famílias respectivamente pertencem;
+c. O percentual de famílias com salário menor de R$ 2.000,00;
+d. A média de número de filhos;
+e. A média de número de animais de estimação. */
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main () {
+    char opcao;
+    
+    int soma_total=0;
+    float media_salario;
+    
+    int maior_renda=0, menor_renda=2000, familia_maior_renda, familia_menor_renda;
+    
+    float percentual=0;
+    
+    int soma_filhos=0, soma_animais=0;
+    float media_filhos, media_animais;
+    
+    
+    srand(time(NULL));
+    
+    int mat[200][3];
+    printf ("FAMILIA-------RENDA--FILHOS--ANIMAIS\n");
+    for (int i=0; i<200; i++){
+        for (int j=0; j<3; j++){
+            if (j%3 == 0){
+                printf ("Familia %3i :", i+1);
+                mat[i][j] = rand () % 19501 + 500;
+                //media
+                soma_total+= mat[i][j];
+                //maior renda
+                if (mat[i][j] > maior_renda){
+                    maior_renda = mat[i][j];
+                    familia_maior_renda = i + 1;
+                }
+                //menor renda
+                if (mat[i][j] < menor_renda){
+                    menor_renda = mat[i][j];
+                    familia_menor_renda = i + 1;
+                }
+                //percentual
+                if (mat[i][j] < 2000) {
+                    percentual += 2;
+                }
+                
+            }else if (j%3 == 1){
+                mat[i][j] = rand () % 13;
+                soma_filhos+=mat[i][j];
+            }else {
+                mat[i][j] = rand () % 6;
+                soma_animais += mat[i][j];
+            }
+            printf ("%6i", mat[i][j]);
+            
+        }
+        printf ("\n");
+    }
+    while (1){
+        printf ("\n\ninforme uma das opções a seguir :\n\n\n");
+        printf ("a. A média de salário da população\n");
+        printf ("b. A maior e a menor renda familiar e a quais famílias respectivamente pertencem\n");
+        printf ("c. O percentual de famílias com salário menor de R$ 2.000,00\n");
+        printf ("d. A média de número de filhos\n");
+        printf ("e. A média de número de animais de estimação.\n");
+        scanf (" %c", &opcao);
+        printf ("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        switch (opcao) {
+            case 'a':
+                media_salario = soma_total / 200.0;
+                printf ("A media de salario da população é : %.2f\n\n", media_salario);
+            break;
+            case 'b':
+                printf ("A maior renda familiar é : %i, pertencente a familia %i\n", maior_renda, familia_maior_renda);
+                printf ("A menor renda familiar é : %i, pertencente a familia %i\n", menor_renda, familia_menor_renda);
+            break;
+            case 'c':
+                printf ("O percentual de famílias com salário menor de R$ 2.000,00 é : %.0f%% ", percentual);
+            break;
+            case 'd':
+                media_filhos = soma_filhos / 200.0;
+                printf ("A media de filhos é : %.2f", media_filhos);
+            break;
+            case 'e':
+                media_animais = soma_animais / 200.0;
+                printf ("A media de animais de estimação é : %.2f", media_animais);
+            break;
+            default:
+                printf ("\n\n\n\n\nPrograma encerrado.");
+            return 0;
+        }
+    }    
+}
