@@ -10,6 +10,7 @@ g. Apresentar a média dos valores acima da diagonal principal
 Procure empregar o uso de funções na solução deste problema. */
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 void gerar_matriz(){
     int mat[9][9]; 
     for (int i=0; i<9; i++){
@@ -54,9 +55,49 @@ void media_coluna(int mat[9][9]){
     media=soma/9.0;
     printf ("a media da coluna é :%.2f\n", media);
 }
+
+void media_diagonal_principal(int mat[9][9]){
+    int soma=0;
+    float media;
+    for (int i=0; i<9; i++){
+        soma += mat[i][i];
+    }
+    media = soma / 9.0;
+    printf ("a media da diagonal principal é : %.2f\n", media);
+}
+
+void media_abaixo_principal(int mat[9][9]){
+    int soma=0;
+    float media;
+    for (int i=0; i<9; i++){
+        for (int j=0; j<9; j++){
+            if (i > j){
+                soma += mat[i][j];
+            }
+        }
+    }
+    media = soma / 36.0;
+    printf ("a media dos numeros abaixo da diagonal principal é : %.2f\n", media);
+}
+
+void media_acima_principal(int mat[9][9]){
+    int soma=0;
+    float media;
+    for (int i=0; i<9; i++){
+        for (int j=0; j<9; j++){
+            if (j > i){
+                soma += mat[i][j];
+            }
+        }
+    }
+    media = soma / 36.0;
+    printf ("a media dos numeros acima da diagonal principal é : %.2f\n", media);
+}
+
 int main() {
     char opcao;
     int mat[9][9];
+    int teste=0;
     srand(time(NULL));
     while (1){
         printf("Selecione uma opção\n");
@@ -74,17 +115,54 @@ int main() {
                     for (int j=0; j<9; j++){
                         mat[i][j] = rand() % 10;
                     }
+                    teste++;
                 }        
             break;
             case 'b':
+            if (teste == 0){
+                printf ("Matriz não pode ser apresentada, pois ela não foi gerada ainda !");
+                return 0;
+            }
             apresentar_matriz(mat);
             break;
             case 'c':
+            if (teste == 0){
+                printf ("Matriz não pode ser apresentada, pois ela não foi gerada ainda !");
+                return 0;
+            }
             media_linha(mat);
             break;
             case 'd':
+            if (teste == 0){
+                printf ("Matriz não pode ser apresentada, pois ela não foi gerada ainda !");
+                return 0;
+            }
             media_coluna(mat);
             break;
+            case 'e':
+            if (teste == 0){
+                printf ("Matriz não pode ser apresentada, pois ela não foi gerada ainda !");
+                return 0;
+            }
+            media_diagonal_principal(mat);
+            break;
+            case 'f':
+            if (teste == 0){
+                printf ("Matriz não pode ser apresentada, pois ela não foi gerada ainda !");
+                return 0;
+            }
+            media_abaixo_principal(mat);
+            break;
+            case 'g':
+            if (teste == 0){
+                printf ("Matriz não pode ser apresentada, pois ela não foi gerada ainda !");
+                return 0;
+            }
+            media_acima_principal(mat);
+            break;
+            default:
+            printf ("Letra incorreta !!");
+            return 0;
         }
     
         getchar();
