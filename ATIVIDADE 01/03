@@ -1,0 +1,34 @@
+/* 3. Faça um programa em C para ler ou gerar (aleatoriamente) 10 números e armazená-los em um vetor. O
+programa deve conter um procedimento para ordenar os números no vetor em ordem crescente. Ao final
+da execução, o programa deve apresentar o vetor ordenado. */
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main () {
+    int vet[10];
+    int aux;
+    
+    srand(time(NULL));
+    
+    printf("--- VETOR ANTES DE ARRUMAR : --- \n");
+    for (int i=0; i<10; i++){
+        vet[i] = rand() % 10;
+        printf ("%3i", vet[i]);
+    }
+    printf ("\n\n");
+    printf ("-- VETOR DEPOIS DE ARRUMAR : --\n");
+    for (int i=0; i<10; i++){
+        for (int j = i+1; j<10; j++){
+            if (vet[j] < vet[i]){
+                aux= vet[i];
+                vet[i] = vet[j];
+                vet[j] = aux;
+                
+            }
+        }
+    }
+    for (int i=0; i<10; i++){
+        printf ("%3i", vet[i]);
+    }
+}
