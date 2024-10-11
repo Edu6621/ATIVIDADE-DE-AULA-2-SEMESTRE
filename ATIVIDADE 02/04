@@ -1,0 +1,23 @@
+//4. Faça um programa em C que contenha uma função recursiva para calcular o N-ésimo elemento da
+//sequência da Fibonacci.
+#include <stdio.h>
+
+int Fibonacci (int n){
+    if (n == 0){
+        return 0;
+    }if (n ==1){
+        return 1;
+    }
+    return Fibonacci (n-1) + Fibonacci(n-2);
+}
+
+int main () {
+    int n;
+    printf ("informe um número positivo : ");
+    scanf ("%i", &n);
+    if (n<0){
+        printf ("erro");
+        return 0;
+    }
+    printf ("o %i número da sequência Fibonacci é : %i", n, Fibonacci(n));
+}
