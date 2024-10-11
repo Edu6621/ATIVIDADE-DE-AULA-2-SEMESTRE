@@ -1,0 +1,21 @@
+// 2. Escreva um programa que contenha uma função que calcule a 
+//soma dos primeiros N cubos: S(n) = 1^3 + 2^3 + ⋯ + n^3
+#include <stdio.h>
+
+int somatorio(int n){
+    if (n==1){
+        return 1;
+    }
+    return (n*n*n) + (somatorio(n-1));
+}
+
+int main () {
+    int n;
+    printf ("informe um número positivo : ");
+    scanf ("%i", &n);
+    if (n<0){
+        printf ("esse número é negativo ");
+        return 0;
+    }
+    printf ("o resultado da conta é : %i", somatorio(n));
+}
