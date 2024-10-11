@@ -1,0 +1,22 @@
+//5. Escreva uma função recursiva que receba um número inteiro positivo N e imprima todos os números
+//naturais de 0 (zero) até N em ordem crescente.
+#include <stdio.h>
+
+void naturais (int n){
+    if (n==0){
+        return;
+    }
+    naturais(n-1);
+    printf ("%i ", n);
+}
+
+int main () {
+    int n;
+    printf ("informe um número positivo : ");
+    scanf ("%i", &n);
+    if (n<0){
+        printf ("erro");
+        return 0;
+    }
+    naturais(n);
+}
