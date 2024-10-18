@@ -1,0 +1,20 @@
+/*4. Elabore um programa que leia dois valores inteiros (A e B). Em seguida desenvolva uma função
+que retorne a soma do dobro dos dois números lidos. A função deverá armazenar o dobro de A na
+própria variável A e o dobro de B na própria variável B. */
+#include <stdio.h>
+int soma(int* a, int* b){
+    *a*=2;
+    *b*=2;
+    return *a + *b;
+}
+
+int main () {
+    int a, b;
+    printf ("informe um número : ");
+    scanf ("%i", &a);
+    printf ("informe outro número : ");
+    scanf ("%i", &b);
+    
+    printf ("a soma do dobro desses números é : %i", soma(&a, &b));
+    return 0;
+}
