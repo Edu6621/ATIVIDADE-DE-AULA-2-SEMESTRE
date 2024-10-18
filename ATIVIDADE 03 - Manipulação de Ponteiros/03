@@ -1,0 +1,22 @@
+/*3. Faça um programa que leia dois valores inteiros para variáveis declaradas na rotina principal e
+chame uma função que receba dois ponteiros para essas variáveis. A função deve fazer a troca
+dos valores das variáveis. Os valores devem ser apresentados após a troca. */
+#include <stdio.h>
+void Troca (int* a, int* b){
+    int aux;
+    aux = *a;
+    *a = *b;
+    *b = aux;
+}
+int main () {
+    int a, b;
+    printf ("informe um valor inteiro : ");
+    scanf ("%i", &a);
+    printf ("informe outro valor inteiro : ");
+    scanf ("%i", &b);
+    
+    Troca (&a, &b);
+    
+    printf ("o novo valor de A é : %i\n", a);
+    printf ("o novo valor de B é : %i\n", b);
+}
