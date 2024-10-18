@@ -1,0 +1,34 @@
+/*1. Escreva um programa que declare variáveis do tipo inteiro, real e caractere. O programa deve
+possuir 3 ponteiros, cada um associado à uma das variáveis. Modifique os valores de cada variável
+usando os ponteiros. Os valores devem ser apresentados na tela antes e depois das modificações. */
+#include <stdio.h>
+#include <string.h>
+void Ponteiro (int* i, float* h, char* n){
+    *i *=2;
+    *h *=2;
+    strcat(n, " (modificado)");
+}
+int main () {
+    int idade;
+    float altura;
+    char nome[50];
+    printf ("informe o seu nome : ");
+    fgets (nome, sizeof(nome), stdin);
+    printf ("informe a sua idade : ");
+    scanf ("%i", &idade);
+    printf ("informe a sua altura : ");
+    scanf ("%f", &altura);
+    
+    printf ("\n\nANTES");
+    printf ("\no seu nome é : %s\n", nome);
+    nome[strcspn(nome, "\n")] = '\0';
+    printf ("a sua idade é : %i\n", idade);
+    printf ("a sua altura é : %.2f", altura);
+    
+    Ponteiro(&idade, &altura, nome);
+    
+    printf ("\n\nDEPOIS");
+    printf ("Modificação do nome : %s\n", nome);
+    printf ("o dobro da sua idade é : %i\n", idade);
+    printf ("o dobro da sua altura é : %.2f", altura);
+}
