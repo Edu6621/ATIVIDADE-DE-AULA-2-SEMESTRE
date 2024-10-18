@@ -1,0 +1,19 @@
+// 2. Escreva um programa que contenha duas variáveis do tipo inteiro. Compare seus endereços e
+// mostre o maior deles. 
+#include <stdio.h>
+int main () {
+    int a, b;
+    int *ea = &a;
+    int *eb = &b;
+    printf("Informe algum número inteiro: ");
+    scanf("%i", &a);
+    printf("Informe outro número inteiro: ");
+    scanf("%i", &b);
+    printf ("Endereço de (A) : %p\n", ea);
+    printf ("Endereço de (B) : %p\n", eb);
+    if (ea > eb){
+        printf ("o maior Endereço é do valor (a) : %p\n", ea);
+    }else{
+        printf ("o maior Endereço é do valor (b) : %p\n", eb);
+    }
+}
