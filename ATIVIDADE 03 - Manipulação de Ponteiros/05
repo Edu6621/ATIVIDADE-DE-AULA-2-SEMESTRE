@@ -1,0 +1,18 @@
+/*5. Crie um programa que contenha um procedimento que por parâmetro dois valores inteiros e um
+ponteiro. A função deve calcular a soma entre os números armazenados nas variáveis e armazenar
+o resultado na em uma variável local da rotina principal (main) através do uso do ponteiro.*/
+#include <stdio.h>
+int Somando (int* a, int* b, int* soma){
+    *soma = *a+*b;
+}
+int main () {
+    int a, b;
+    int soma;
+    
+    printf ("informe um número : ");
+    scanf ("%i", &a);
+    printf ("informe outro número : ");
+    scanf ("%i", &b);
+    Somando(&a, &b, &soma);
+    printf ("a soma desse número é : %i", soma);
+}
