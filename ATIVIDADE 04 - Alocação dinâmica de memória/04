@@ -1,0 +1,34 @@
+/*4. Faça um programa que leia uma quantidade qualquer de números armazenando-os na memória e
+pare a leitura quando o usuário entrar um valor negativo. Em seguida, imprima o vetor lido. Use
+a função REALLOC como achar mais conveniente para realocar memória sempre que
+necessário.*/
+#include <stdio.h>
+#include <stdlib.h>
+int main () {
+    int numero;
+    int tamanho=0;
+    int *numeros = NULL;
+    while (1){
+        printf ("informe um número : ");
+        scanf ("%i", &numero);
+        
+        if (numero<0){
+            break;
+        }
+        
+        int *temp = realloc(numeros, (tamanho+1) * sizeof(int));
+        if (temp == NULL){
+            printf ("falha na alocação");
+            free (numeros);
+            return 1;
+        }
+        numeros = temp; 
+        numeros[tamanho] = numero;
+        tamanho++;
+    }
+    for (int i=0; i<tamanho; i++){
+        printf ("%i ", *(numeros+i));
+    }
+    free (numeros);
+    return 0;
+}
