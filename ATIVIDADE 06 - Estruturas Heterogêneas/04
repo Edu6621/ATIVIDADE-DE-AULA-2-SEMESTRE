@@ -1,0 +1,56 @@
+/* 4. Escreva um programa que contenha duas estruturas: a primeira dela deve se chamar ‘endereco’ e deve
+possuir os seguintes dados: rua, numero, complemento e bairro; a segunda estrutura deve conter os
+seguintes dados de ‘cliente’: nome, data de nascimento e endereço, sendo esta última a estrutura criada
+anteriormente. O programa deve ler os dados de um cliente e apresenta-los na tela. */
+#include <stdio.h>
+#include <string.h>
+
+struct Endereco{
+    char rua[50];
+    int numero;
+    char complemento[50];
+    char bairro[20];
+};
+
+struct Cliente{
+    char nome[50];
+    int dia, mes, ano;
+    struct Endereco endereco;
+}cliente;
+
+int main () {
+    printf ("informe o seu nome : ");
+    fgets (cliente.nome, sizeof(cliente.nome), stdin);
+    cliente.nome[strcspn(cliente.nome, "\n")] = '\0';
+
+    printf ("informe sua data de nascimento : \n");
+    scanf ("%i", &cliente.dia);
+    scanf ("%i", &cliente.mes);
+    scanf ("%i", &cliente.ano);
+    getchar();
+
+    printf ("informe o endereço :\nrua : ");
+    fgets (cliente.endereco.rua, sizeof(cliente.endereco.rua), stdin);
+    cliente.endereco.rua[strcspn(cliente.endereco.rua, "\n")] = '\0';
+    
+    printf ("numero : ");
+    scanf ("%i", &cliente.endereco.numero);
+    getchar();
+
+    printf ("complemento : ");
+    fgets (cliente.endereco.complemento, sizeof(cliente.endereco.complemento), stdin);
+    cliente.endereco.complemento[strcspn(cliente.endereco.complemento, "\n")] = '\0';
+
+    printf ("bairro : ");
+    fgets (cliente.endereco.bairro, sizeof(cliente.endereco.bairro), stdin);
+    cliente.endereco.bairro[strcspn(cliente.endereco.bairro, "\n")] = '\0';
+
+
+    printf ("\nnome : %s\n", cliente.nome);
+    printf ("data de nascimento : %i/%i/%i\n", cliente.dia, cliente.mes, cliente.ano);
+    printf ("endereço:\n");
+    printf ("rua : %s\n", cliente.endereco.rua);
+    printf ("numero : %i\n", cliente.endereco.numero);
+    printf ("complemento : %s\n", cliente.endereco.complemento);
+    printf ("bairro : %s\n", cliente.endereco.bairro);
+}
