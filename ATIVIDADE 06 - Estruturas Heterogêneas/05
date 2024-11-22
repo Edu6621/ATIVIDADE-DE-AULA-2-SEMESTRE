@@ -1,0 +1,108 @@
+/* 5. Implemente um programa que armazene os dados de livros usando uma struct chamada ‘livro’, que
+contenha os campos: título (string), autor (string) e ano de publicação (inteiro). O programa deve conter
+um menu com as seguintes opções:
+1. Inserir livro
+2. Listar livros
+3. Pesquisar por título
+4. Pesquisar por autor
+5. Pesquisar por ano de publicação
+Os dados dos livros devem ser armazenados em um vetor alocado de forma dinâmica e as
+funcionalidades de cada opção devem ser implementadas em sub-rotinas (funções ou procedimentos). */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Livro {
+    char titulo[50];
+    char autor[50];
+    int ano;
+};
+
+int main () {
+    struct Livro *livros = NULL;
+    int n = 0;
+
+
+    int opcao;
+    while (1){
+        printf ("escolha uma opção :\n");
+        printf ("1. Inserir livro\n");
+        printf ("2. Listar livros\n");
+        printf ("3. Pesquisar por título\n");
+        printf ("4. Pesquisar por autor\n");
+        printf ("5. Pesquisar por ano de publicação\n");
+        scanf ("%i", &opcao);
+        getchar();
+        switch (opcao){
+            case 1:
+                livros = realloc(livros, (n+1) * sizeof *livros);
+                
+                printf ("informe o titulo do livro : ");
+                fgets (livros[n].titulo, sizeof(livros[n].titulo), stdin);
+                livros[n].titulo[strcspn(livros[n].titulo, "\n")] = '\0';
+
+                printf ("informe o autor : ");
+                fgets (livros[n].autor, sizeof(livros[n].autor), stdin);
+                livros[n].autor[strcspn(livros[n].autor, "\n")] = '\0';
+
+                printf ("informe o ano : ");
+                scanf ("%i", &livros[n].ano);
+                getchar();
+
+                n++;
+                break;
+            case 2:
+                for (int i=0; i<n; i++){
+                    printf ("titulo : %s\n", livros[i].titulo);
+                    printf ("autor : %s\n", livros[i].autor);
+                    printf ("ano : %i\n\n", livros[i].ano);
+                }
+                break;
+            case 3:
+                char titulo[50];
+
+                printf ("\ninforme o titulo : ");
+                fgets (titulo, sizeof(titulo), stdin);
+                titulo[strcspn(titulo, "\n")] = '\0';
+                for (int i=0; i<n; i++){
+                    if (strcmp(titulo, livros[i].titulo) == 0) {
+                        printf ("titulo : %s\n", livros[i].titulo);
+                        printf ("autor : %s\n", livros[i].autor);
+                        printf ("ano : %i\n\n", livros[i].ano);
+                    }    
+                }
+                break;
+            case 4:
+                char autor[50];
+
+                    printf ("\ninforme o autor : ");
+                    fgets (autor, sizeof(autor), stdin);
+                    autor[strcspn(autor, "\n")] = '\0';
+                    for (int i=0; i<n; i++){
+                        if (strcmp(autor, livros[i].autor) == 0) {
+                            printf ("titulo : %s\n", livros[i].titulo);
+                            printf ("autor : %s\n", livros[i].autor);
+                            printf ("ano : %i\n\n", livros[i].ano);
+                        }    
+                    }
+                break;
+            case 5:
+                int ano;
+
+                    printf ("\ninforme o ano : ");
+                    scanf ("%i", &ano);
+                    getchar();
+                    for (int i=0; i<n; i++){
+                        if (ano == livros[i].ano) {
+                            printf ("titulo : %s\n", livros[i].titulo);
+                            printf ("autor : %s\n", livros[i].autor);
+                            printf ("ano : %i\n\n", livros[i].ano);
+                        }    
+                    }
+                break;            
+            default:
+                continue;
+        }
+    }
+    return 0;
+}
