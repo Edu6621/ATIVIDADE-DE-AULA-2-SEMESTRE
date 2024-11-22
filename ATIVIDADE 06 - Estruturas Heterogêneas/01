@@ -1,0 +1,28 @@
+/* 1. Defina uma struct chamada Pessoa que contenha os seguintes campos: nome (string de até 50
+caracteres), idade (inteiro) e altura (float). Depois, crie um programa que leia os dados de uma pessoa e
+os exiba na tela. */
+#include <stdio.h>
+#include <string.h>
+struct Pessoa{
+    char nome[50];
+    int idade;
+    float altura;
+}pessoa;
+
+int main () {
+
+    printf ("informe o nome : ");
+    fgets (pessoa.nome, sizeof(pessoa.nome), stdin);
+    pessoa.nome[strcspn(pessoa.nome, "\n")] = '\0';
+
+    printf ("informe a idade : ");
+    scanf ("%d", &pessoa.idade);
+
+    printf ("informe a altura : ");
+    scanf ("%f", &pessoa.altura);
+
+    printf ("nome : %s\n", pessoa.nome);
+    printf ("idade : %i\n", pessoa.idade);
+    printf ("altura : %.2f", pessoa.altura);
+    return 0;
+}
