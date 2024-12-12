@@ -1,0 +1,107 @@
+
+/* Resolva o problema utilizando os conceitos trabalhados em aulas, aplicados na linguagem C.
+ 1. Considerando o programa exemplo desenvolvido em aula, adapte o código para incluir as seguintes
+operações para manipulação da lista:
+
+    a. Inserir no final da lista
+    b. Buscar por valor
+    c. Buscar por posição
+    d. Remover do final
+    e. Remover por posição
+    f. Remover por valor
+    g. Imprimir apenas elementos pares (ou ímpares)
+    h. Finalizar programa
+    
+Importante: para cada opção selecionada, verifique a possibilidade de sua execução, informando caso
+alguma solicitação não possa ser atendida (ex: tentar excluir um elemento de uma lista vazia).
+Desafio: implemente uma função recursiva e uma função não recursiva para contar a quantidade de
+elementos na lista. */
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct Node{
+    int vlr;
+    struct Node *prox;
+} node;
+
+
+node insereFinal(int v,node *p);
+void mostraLista (node * p);
+
+int main () {
+    node *lista = NULL;
+    char opcao = 'z';
+    int valor;
+    while (opcao != 'h'){
+        printf ("a. Inserir no final da lista\n");
+        printf ("b. Buscar por valor\n");
+        printf ("c. Buscar por posição\n");
+        printf ("d. Remover do final\n");
+        printf ("e. Remover por posição\n");
+        printf ("f. Remover por valor\n");
+        printf ("g. Imprimir apenas elementos pares (ou ímpares)\n");
+        printf ("h. Finalizar programa\n");
+        
+        scanf ("%c", &opcao);
+        getchar();
+        switch (opcao){
+            case 'a':
+                printf ("Informe o valor : ");
+                scanf ("%i", &valor);
+                insereFinal(valor, lista);
+                break;
+            case 'b':
+                break;
+            case 'c':
+                break;
+            case 'd':
+                break;
+            case 'e':
+                break;
+            case 'f':
+                break;
+            case 'g':
+                mostraLista(lista);
+                break;
+            case 'h':
+                printf ("Programa Finalizado !\n");
+                return 0;
+            default :
+                printf ("Caractere inválido !");
+                break;
+        }
+        getchar();
+    }
+}    
+node* insereFinal(int v, node *p) {
+    node *novo = malloc(sizeof(node));  // Criação do novo nó
+    novo->vlr = v;                      // Atribui o valor ao nó
+    novo->prox = NULL;                  // O novo nó será o último, então aponta para NULL
+
+    if (p == NULL) {
+        return novo; // Se a lista estiver vazia, o novo nó é o único da lista
+    } else {
+        node *temp = p;
+        // Percorre até o último nó
+        while (temp->prox != NULL) {
+            temp = temp->prox;
+        }
+        temp->prox = novo;  // O último nó agora aponta para o novo nó
+    }
+
+    return p;  // Retorna a lista, não modifica o ponteiro principal da lista se não estiver vazia
+}
+
+// Função para mostrar a lista
+void mostraLista(node *p) {
+    if (p == NULL) {
+        printf("Lista vazia!\n");
+        return;
+    }
+
+    node *l = p;
+    while (l) {
+        printf(" %d ", l->vlr);
+        l = l->prox;
+    }
+    printf("\n");
+}
