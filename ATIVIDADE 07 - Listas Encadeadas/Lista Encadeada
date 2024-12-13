@@ -18,20 +18,25 @@ Desafio: implemente uma função recursiva e uma função não recursiva para co
 elementos na lista. */
 #include <stdio.h>
 #include <stdlib.h>
+
 typedef struct Node{
-    int vlr;
-    struct Node *prox;
+    int valor;
+    struct Node *pPonteiro;
 } node;
 
 
-node insereFinal(int v,node *p);
-void mostraLista (node * p);
+node* insereFinal(node *cabeca,int num);
+void buscarValor(node *cabeca,int num);
+void buscaPosicao(node *cabeca, int num);
+node* removeFinal(node *cabeca);
+void imprimir(node *cabeca);
 
 int main () {
-    node *lista = NULL;
+    node *cabeca = NULL;
     char opcao = 'z';
-    int valor;
-    while (opcao != 'h'){
+    int num;
+    while (opcao != 'i'){
+        printf ("\tMENU\n");
         printf ("a. Inserir no final da lista\n");
         printf ("b. Buscar por valor\n");
         printf ("c. Buscar por posição\n");
@@ -39,69 +44,137 @@ int main () {
         printf ("e. Remover por posição\n");
         printf ("f. Remover por valor\n");
         printf ("g. Imprimir apenas elementos pares (ou ímpares)\n");
-        printf ("h. Finalizar programa\n");
+        printf ("h. Imprimir elementos\n");
+        printf ("i. Finalizar programa\n");
         
-        scanf ("%c", &opcao);
+        scanf (" %c", &opcao);
         getchar();
+
         switch (opcao){
             case 'a':
                 printf ("Informe o valor : ");
-                scanf ("%i", &valor);
-                insereFinal(valor, lista);
+                scanf ("%i", &num);
+                cabeca = insereFinal(cabeca, num);  //pronto 
                 break;
             case 'b':
+                printf ("Informe o valor : ");
+                scanf ("%d", &num);
+                buscarValor(cabeca, num); //pronto
                 break;
             case 'c':
+                printf ("Informe a posição : ");
+                scanf ("%d", &num);
+                buscaPosicao(cabeca, num); //pronto
                 break;
             case 'd':
+                cabeca = removeFinal(cabeca); //n sei pq tem erro
                 break;
             case 'e':
                 break;
             case 'f':
                 break;
             case 'g':
-                mostraLista(lista);
                 break;
             case 'h':
-                printf ("Programa Finalizado !\n");
+                imprimir(cabeca); //pronto
+                break;    
+            case 'i':
+                printf ("Programa Finalizado !\n"); //pronto
                 return 0;
             default :
-                printf ("Caractere inválido !");
+                printf ("Caractere inválido !"); //pronto
                 break;
         }
         getchar();
     }
 }    
-node* insereFinal(int v, node *p) {
-    node *novo = malloc(sizeof(node));  // Criação do novo nó
-    novo->vlr = v;                      // Atribui o valor ao nó
-    novo->prox = NULL;                  // O novo nó será o último, então aponta para NULL
-
-    if (p == NULL) {
-        return novo; // Se a lista estiver vazia, o novo nó é o único da lista
-    } else {
-        node *temp = p;
-        // Percorre até o último nó
-        while (temp->prox != NULL) {
-            temp = temp->prox;
-        }
-        temp->prox = novo;  // O último nó agora aponta para o novo nó
+node* insereFinal(node *cabeca,int num){
+    node *novo =(node*) malloc(sizeof(node));
+    novo->valor = num;
+    novo->pPonteiro = NULL;
+    
+    if (cabeca == NULL){
+        return novo;
     }
 
-    return p;  // Retorna a lista, não modifica o ponteiro principal da lista se não estiver vazia
+    node *aux = cabeca;
+    while (aux->pPonteiro != NULL) {
+        aux = aux->pPonteiro;
+    }
+
+    aux->pPonteiro = novo;
+    return cabeca;
+
 }
 
-// Função para mostrar a lista
-void mostraLista(node *p) {
-    if (p == NULL) {
-        printf("Lista vazia!\n");
+void buscarValor(node *cabeca,int num){
+    node *aux = cabeca;
+    int i=0;
+
+    while (aux->pPonteiro != NULL){
+        i++;
+        if (aux->valor == num){
+            printf ("\nVocê encontrou o valor %i na posição %i\n\n", num, i);
+        }
+        aux = aux->pPonteiro;
+    }
+    printf ("\nNão existe esse valor na lista\n\n");
+}
+
+void buscaPosicao(node *cabeca, int num){
+    node *aux = cabeca;
+    for (int i=0; i<num-1; i++){
+        aux = aux->pPonteiro;
+    }
+    if (aux != NULL){
+        printf ("\no valor na posicao %i é %i\n\n", num, aux->valor);
+    }else{
+        printf ("Não existe valor na posição %i\n", num);
+    }
+}
+
+node* removeFinal(node *cabeca) {
+    if (cabeca == NULL) {
+        printf("Lista vazia.\n");
+        return cabeca;  // Lista vazia, não há o que remover
+    }
+
+    // Caso a lista tenha apenas um nó
+    if (cabeca->pPonteiro == NULL) {
+        free(cabeca); // Remove o único nó
+        printf("Elemento removido.\n");
+        return NULL;  // Lista agora está vazia
+    }
+
+    node *aux = cabeca;
+    node *penultimo = NULL;
+
+    // Percorre até o penúltimo nó
+    while (aux->pPonteiro != NULL) {
+        penultimo = aux;
+        aux = aux->pPonteiro;
+    }
+
+    // Agora `aux` é o último nó e `penultimo` é o penúltimo nó
+    penultimo->pPonteiro = NULL;  // Remove a referência para o último nó
+    free(aux);  // Libera a memória do último nó
+    printf("Elemento removido.\n");
+
+    return cabeca;  // Retorna a nova cabeça (caso a lista tenha mudado)
+}
+
+
+
+void imprimir(node *cabeca){
+    if (cabeca == NULL) {
+        printf("Lista vazia.\n");
         return;
     }
 
-    node *l = p;
-    while (l) {
-        printf(" %d ", l->vlr);
-        l = l->prox;
+    node *temp = cabeca;
+    while (temp != NULL) {
+        printf("%d ", temp->valor);
+        temp = temp->pPonteiro;
     }
     printf("\n");
 }
