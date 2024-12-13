@@ -10,7 +10,8 @@ operações para manipulação da lista:
     e. Remover por posição
     f. Remover por valor
     g. Imprimir apenas elementos pares (ou ímpares)
-    h. Finalizar programa
+    h. Imprimir valores
+    i. Finalizar programa
     
 Importante: para cada opção selecionada, verifique a possibilidade de sua execução, informando caso
 alguma solicitação não possa ser atendida (ex: tentar excluir um elemento de uma lista vazia).
@@ -29,6 +30,10 @@ node* insereFinal(node *cabeca,int num);
 void buscarValor(node *cabeca,int num);
 void buscaPosicao(node *cabeca, int num);
 node* removeFinal(node *cabeca);
+node *removerPosicao(node *cabeca,int num);
+node *removerValor (node *cabeca,int num);
+void imprimirParImpar(node *cabeca,int num);
+
 void imprimir(node *cabeca);
 
 int main () {
@@ -48,13 +53,12 @@ int main () {
         printf ("i. Finalizar programa\n");
         
         scanf (" %c", &opcao);
-        getchar();
 
         switch (opcao){
             case 'a':
                 printf ("Informe o valor : ");
                 scanf ("%i", &num);
-                cabeca = insereFinal(cabeca, num);  //pronto 
+                cabeca = insereFinal(cabeca, num);  //pronto
                 break;
             case 'b':
                 printf ("Informe o valor : ");
@@ -67,13 +71,26 @@ int main () {
                 buscaPosicao(cabeca, num); //pronto
                 break;
             case 'd':
-                cabeca = removeFinal(cabeca); //n sei pq tem erro
+                cabeca = removeFinal(cabeca); //pronto
                 break;
             case 'e':
+                printf ("Informe a posição : ");
+                scanf ("%d", &num);
+                cabeca = removerPosicao(cabeca, num);
                 break;
             case 'f':
+                printf ("Informe o valor : ");
+                scanf ("%d", &num);
+                cabeca = removerValor (cabeca, num);
                 break;
             case 'g':
+                printf ("Escolha :\n");
+                printf ("Par - 1\n");
+                printf ("Impar - 2\n");
+                scanf (" %d", &num);
+                if (num == 1 || num == 2){
+                    imprimirParImpar(cabeca, num);
+                }
                 break;
             case 'h':
                 imprimir(cabeca); //pronto
@@ -136,34 +153,111 @@ void buscaPosicao(node *cabeca, int num){
 node* removeFinal(node *cabeca) {
     if (cabeca == NULL) {
         printf("Lista vazia.\n");
-        return cabeca;  // Lista vazia, não há o que remover
+        return cabeca;
     }
 
-    // Caso a lista tenha apenas um nó
     if (cabeca->pPonteiro == NULL) {
-        free(cabeca); // Remove o único nó
+        free(cabeca);
         printf("Elemento removido.\n");
-        return NULL;  // Lista agora está vazia
+        return NULL;
     }
 
     node *aux = cabeca;
     node *penultimo = NULL;
 
-    // Percorre até o penúltimo nó
     while (aux->pPonteiro != NULL) {
         penultimo = aux;
         aux = aux->pPonteiro;
     }
 
-    // Agora `aux` é o último nó e `penultimo` é o penúltimo nó
-    penultimo->pPonteiro = NULL;  // Remove a referência para o último nó
-    free(aux);  // Libera a memória do último nó
-    printf("Elemento removido.\n");
+    penultimo->pPonteiro = NULL; 
+    free(aux);
 
-    return cabeca;  // Retorna a nova cabeça (caso a lista tenha mudado)
+    return cabeca;  
 }
 
+node *removerPosicao(node *cabeca,int num){
+    if (cabeca == NULL){
+        printf ("\nLista Vazia !\n\n");
+        return cabeca;
+    }
+    
+    if (cabeca->valor == num) {
+        node* temp = cabeca;
+        cabeca = cabeca->pPonteiro; 
+        free(temp);
+        return cabeca;
+    }
+    
+    
+    node *aux = cabeca;
+    node *penultimo = aux;
+    for (int i=1; i<num; i++){
+        aux = aux->pPonteiro;
+    }
+    for (int i=1; i<num-1; i++){
+        penultimo = penultimo->pPonteiro;
+    }
+    penultimo->pPonteiro = aux->pPonteiro;
+    free (aux);
+    return cabeca;
+}
 
+node *removerValor (node *cabeca,int num){
+    if (cabeca == NULL){
+        printf ("\nLista Vazia !\n\n");
+        return cabeca;
+    }
+    
+    if (cabeca->valor == num) {
+        node* temp = cabeca;
+        cabeca = cabeca->pPonteiro; 
+        free(temp);
+        printf("\nElemento removido.\n");
+        return cabeca;
+    }
+    
+    
+    node *aux = cabeca;
+    node *penultimo = aux;
+    
+    while (aux->valor != num && aux != NULL){
+        aux = aux->pPonteiro;
+    }
+    while (penultimo->pPonteiro != aux){
+        penultimo = penultimo -> pPonteiro;
+    }
+    
+    if (aux->valor == num){
+        penultimo->pPonteiro = aux->pPonteiro;
+        free (aux);
+    }else{
+        printf ("\nNão existe esse número na lista \n\n");
+    }
+    return cabeca;
+}
+
+void imprimirParImpar(node *cabeca,int num){
+    node *aux = cabeca;
+    printf ("\n");
+    while (aux != NULL){
+        if (num == 1){
+            if (aux->valor %2 == 0){
+                printf ("%d ", aux->valor);
+            }
+            aux = aux->pPonteiro;
+        }
+        
+        
+        else{
+            if (aux->valor %2 != 0){
+                printf ("%d ", aux->valor);
+            }
+            aux = aux->pPonteiro;
+        }
+    }
+    printf ("\n");
+}
 
 void imprimir(node *cabeca){
     if (cabeca == NULL) {
