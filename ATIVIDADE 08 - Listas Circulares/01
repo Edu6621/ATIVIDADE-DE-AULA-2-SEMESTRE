@@ -1,0 +1,138 @@
+/* Resolva o problema utilizando os conceitos trabalhados em aulas, aplicados na linguagem C.
+Escreva um programa na linguagem C que implemente uma lista encadeada circular com suas
+operações básicas:
+1. Mostrar lista
+2. Inserir no início
+3. Inserir no final
+4. Inserir por posição
+5. Procurar elemento (tratar se há mais de um elemento com o mesmo valor)
+6. Remover por valor
+Importante: para cada opção selecionada, verifique a possibilidade de sua execução, informando caso
+alguma solicitação não possa ser atendida (ex: tentar excluir um elemento de uma lista vazia). */
+#include <stdio.h>
+#include <stdlib.h>
+
+void LimparPrompt() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
+
+
+typedef struct Node{
+    int vlr;
+    struct Node *prox;
+}node;
+
+void MostrarLista(node *cabeca);
+node *InserirInicio(int valor, node *cabeca);
+node *InserirFinal(int valor,node *cabeca);
+
+int main () {
+    int opcao;
+    int valor;
+    node *cabeca = NULL;
+    while (1){
+        printf ("escolha uma opção :\n");
+        printf ("1. Mostrar lista\n");
+        printf ("2. Inserir no início\n");
+        printf ("3. Inserir no final\n");
+        printf ("4. Inserir por posição\n");
+        printf ("5. Procurar elementos\n");
+        printf ("6. Remover por valor\n");
+        scanf ("%d", &opcao);
+        
+        switch (opcao){
+            case 1:
+                LimparPrompt();
+                MostrarLista(cabeca);
+                break;
+            case 2:
+                LimparPrompt();
+                printf ("Insira o valor :\n");
+                scanf ("%d", &valor);
+                cabeca = InserirInicio(valor, cabeca);
+                break;
+            case 3:
+                LimparPrompt();
+                printf ("Insira o valor :\n");
+                scanf ("%d", &valor);
+                cabeca = InserirFinal(valor, cabeca);
+
+                break;        
+            case 4:
+
+                break;
+            case 5:
+
+                break;
+            case 6:
+
+                break;            
+            default:
+
+                break;    
+        }
+    }
+
+}
+void MostrarLista(node *cabeca){
+    if (!cabeca){
+        printf ("Lista Vazia \n");
+    }
+    node *aux = cabeca;
+    printf ("Elementos da lista :\n");
+    do {
+        printf ("%i ", aux->vlr);
+        aux = aux->prox;
+    }while (aux != cabeca);
+    printf ("\n");
+}
+
+node *InserirInicio(int valor, node *cabeca){
+    node *novo = malloc(sizeof(node));
+    
+    if (!novo){
+        printf ("Erro! Memória Insuficiente !!");
+    } else {
+        novo->vlr = valor;
+
+        if (!cabeca){
+            novo->prox = novo;
+        } else {
+            node *aux = cabeca;
+            novo->prox = cabeca;
+            do {
+                aux = aux->prox;
+            }while (aux->prox != cabeca);
+            aux->prox = novo;
+        }
+    }
+    return novo;
+}    
+
+node *InserirFinal(int valor,node *cabeca){
+    node *novo = malloc(sizeof(node));
+    if (!novo) {
+        printf("Erro! Memória Insuficiente!\n");
+        return cabeca; 
+    }
+
+    novo->vlr = valor;
+
+    if (!cabeca) { 
+        novo->prox = novo; 
+        return novo;       
+    } else {
+        node *aux = cabeca;
+        do {
+            aux = aux->prox;
+        } while (aux->prox != cabeca); 
+
+        aux->prox = novo;
+        novo->prox = cabeca; 
+        return cabeca; 
+    }
+}
