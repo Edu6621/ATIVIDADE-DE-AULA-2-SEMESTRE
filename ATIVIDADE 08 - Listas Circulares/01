@@ -26,13 +26,16 @@ typedef struct Node{
     struct Node *prox;
 }node;
 
-void MostrarLista(node *cabeca);
-node *InserirInicio(int valor, node *cabeca);
-node *InserirFinal(int valor,node *cabeca);
+void MostrarLista (node *cabeca);
+node *InserirInicio (int valor, node *cabeca);
+node *InserirFinal (int valor, node *cabeca);
+node *InserirPosicao (int posicao, int valor,node *cabeca);
+void ProcurarElemento (int valor, node *cabeca);
+node *RemoverValor (int valor, node *cabeca);
 
 int main () {
     int opcao;
-    int valor;
+    int valor, posicao;
     node *cabeca = NULL;
     while (1){
         printf ("escolha uma opção :\n");
@@ -63,13 +66,26 @@ int main () {
 
                 break;        
             case 4:
-
+                LimparPrompt();
+                printf ("Informe a posição :");
+                scanf ("%d", &posicao);
+                
+                printf ("Informe o valor : ");
+                scanf ("%d", &valor);
+                cabeca = InserirPosicao(posicao, valor, cabeca);
                 break;
             case 5:
-
+                LimparPrompt();
+                printf ("Informe o valor a ser procurado : ");
+                scanf ("%d", &valor);
+                printf ("\n");
+                ProcurarElemento(valor, cabeca);
                 break;
             case 6:
-
+                LimparPrompt();
+                printf ("Informe o valor a ser removido : ");
+                scanf ("%d", &valor);
+                cabeca = RemoverValor(valor, cabeca);
                 break;            
             default:
 
@@ -135,4 +151,110 @@ node *InserirFinal(int valor,node *cabeca){
         novo->prox = cabeca; 
         return cabeca; 
     }
+}
+
+node *InserirPosicao(int posicao, int valor, node *cabeca) {
+    if (posicao < 1) {
+        printf("Posição inválida! A posição deve ser maior que 0.\n");
+        return cabeca;
+    }
+
+    node *novo = malloc(sizeof(node));
+    novo->vlr = valor;
+
+    if (!cabeca && posicao == 1) {
+        novo->prox = novo;
+        return novo;
+    }
+
+    if (posicao == 1) {
+        novo->prox = cabeca;
+
+        node *aux = cabeca;
+        while (aux->prox != cabeca) {
+            aux = aux->prox;
+        }
+
+        aux->prox = novo;
+
+        return novo;
+    }
+
+    node *aux = cabeca;
+    int contador = 1;
+    while (contador < posicao - 1 && aux->prox != cabeca) {
+        aux = aux->prox;
+        contador++;
+    }
+
+    if (contador != posicao - 1) {
+        printf("Posição inválida! A lista tem menos de %d elementos.\n", posicao);
+        free(novo);
+        return cabeca;
+    }
+
+    novo->prox = aux->prox;
+    aux->prox = novo;
+
+    return cabeca;
+}
+
+void ProcurarElemento(int valor, node *cabeca){
+    node *aux = cabeca;
+    int cont=1;
+    while (aux->prox != cabeca){
+        if (aux->vlr == valor){
+            printf ("valor %i encontrado na posição %i\n",valor, cont);
+        }
+        aux = aux->prox;
+        cont++;
+    }
+    if (aux->vlr == valor){
+            printf ("valor %i encontrado na posição %i\n",valor, cont);
+    }
+    printf ("\n");
+}
+
+node *RemoverValor(int valor, node *cabeca) {
+    if (!cabeca) {
+        printf("A lista está vazia!\n");
+        return cabeca;
+    }
+
+    node *aux = cabeca;
+    node *anterior = NULL;
+
+    if (cabeca->vlr == valor) {
+        if (cabeca->prox == cabeca) {
+            free(cabeca);
+            return NULL;
+        }
+
+        do {
+            aux = aux->prox;
+        } while (aux->prox != cabeca);
+
+        aux->prox = cabeca->prox;
+
+        aux = cabeca->prox;
+        free(cabeca);
+        return aux;
+    }
+
+    anterior = cabeca;
+    aux = cabeca->prox;
+    while (aux != cabeca && aux->vlr != valor) {
+        anterior = aux;
+        aux = aux->prox;
+    }
+
+    if (aux == cabeca) {
+        printf("Valor %d não encontrado na lista!\n", valor);
+        return cabeca;
+    }
+
+    anterior->prox = aux->prox;
+    free(aux);
+
+    return cabeca;
 }
