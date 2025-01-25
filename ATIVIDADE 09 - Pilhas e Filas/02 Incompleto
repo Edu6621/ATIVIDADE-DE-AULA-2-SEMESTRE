@@ -1,0 +1,67 @@
+/*2. Escreva um programa que implemente um sistema de fila com as seguintes operações:
+1. Inicializar (criar uma fila vazia)
+2. Enfileirar
+3. Desenfileirar
+4. Exibir elemento do início
+5. Exibir a quantidade de elementos
+6. Esvaziar fila */
+#include <stdio.h>
+#include <stdlib.h>
+
+void LimparPrompt();
+
+int main () {
+    int qtd=0;
+    int opcao = 1, valor;
+    while (opcao >= 1 && opcao <=6){
+        printf ("Escolha uma opção :\n");
+        printf ("1 - Inicializar\n");
+        printf ("2 - Enfileirar\n");
+        printf ("3 - Desemfileirar\n");
+        printf ("4 - Exibir elemento do início\n");
+        printf ("5 - Exibir a quantidade de elementos\n");
+        printf ("6 - Esvaziar pilha\n");
+        scanf ("%d", &opcao);
+        
+        switch (opcao){
+            case 1:
+                LimparPrompt();
+                node* topo = Inicializar();
+                printf ("Fila inicializada !\n");
+                break;
+            case 2:
+                break;
+            case 3:
+                
+                break;
+            case 4:
+                LimparPrompt();
+                
+                break;
+            case 5:
+                L
+                break;
+            case 6:
+                LimparPrompt();
+                Esvaziar(&topo);
+                printf ("Fila esvaziada !\n");
+                qtd = 0;
+                break;
+        }
+    }
+}
+node *Inicializar (){
+    return NULL;
+}
+
+void Esvaziar(node **topo){
+    *topo = NULL;
+}
+
+void LimparPrompt() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
