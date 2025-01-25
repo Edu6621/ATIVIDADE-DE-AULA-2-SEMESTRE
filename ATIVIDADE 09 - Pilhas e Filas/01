@@ -1,0 +1,111 @@
+/*1. Escreva um programa que implemente um sistema de pilha com as operações:
+1. Inicializar (criar uma pilha vazia)
+2. Empilhar
+3. Desempilhar
+4. Exibir elemento do topo
+5. Exibir a quantidade de elementos
+6. Esvaziar pilha */
+#include <stdio.h>
+#include <stdlib.h>
+
+void LimparPrompt();
+
+
+typedef struct Node{
+    int vlr;
+    struct Node *prox;
+}node;
+
+
+node *Inicializar ();
+void Empilhar (int valor,node **topo);
+int Desempilhar (node **topo);
+void Esvaziar(node **topo);
+
+int main () {
+    int qtd=0;
+    int opcao = 1, valor;
+    while (opcao >= 1 && opcao <=6){
+        printf ("Escolha uma opção :\n");
+        printf ("1 - Inicializar\n");
+        printf ("2 - Empilhar\n");
+        printf ("3 - Desempilhar\n");
+        printf ("4 - Exibir elemento do topo\n");
+        printf ("5 - Exibir a quantidade de elementos\n");
+        printf ("6 - Esvaziar pilha\n");
+        scanf ("%d", &opcao);
+        
+        switch (opcao){
+            case 1:
+                LimparPrompt();
+                node* topo = Inicializar();
+                printf ("Pilha inicializada !\n");
+                break;
+            case 2:
+                LimparPrompt();
+                printf ("Insira o valor a ser Empilhado !\n");
+                scanf ("%d", &valor);
+                Empilhar (valor, &topo);
+                qtd++;
+                printf ("Elemento %d Empilhado !\n", valor);
+                break;
+            case 3:
+                LimparPrompt();
+                int val = Desempilhar(&topo);
+                printf ("Elemento %d Desempilhado !\n", val);
+                qtd--;
+                break;
+            case 4:
+                LimparPrompt();
+                if (!topo){
+                    printf ("Essa pilha não tem elementos !\n");
+                    break;
+                }
+                printf ("O elemento do topo é : %d !\n", topo->vlr);
+                break;
+            case 5:
+                LimparPrompt();
+                printf ("Essa pilha tem %d elementos !\n", qtd);
+                break;
+            case 6:
+                LimparPrompt();
+                Esvaziar(&topo);
+                printf ("Pilha esvaziada !\n");
+                qtd = 0;
+                break;
+        }
+    }
+}
+node *Inicializar (){
+    return NULL;
+}
+
+void Empilhar (int valor,node **topo){
+    node *novo = (node*)malloc (sizeof(node));
+    
+    novo->vlr = valor;
+    novo->prox = *topo;
+    
+    *topo = novo;
+}
+
+int Desempilhar (node **topo){
+    node *aux = *topo;     
+    int n = aux->vlr;
+    *topo = aux->prox;     
+
+    free(aux);
+    return n;
+}    
+
+void Esvaziar(node **topo){
+    *topo = NULL;
+}
+
+void LimparPrompt() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
