@@ -1,0 +1,4 @@
+5. Tratando-se de filas, explique por que é mais conveniente a realização de inserção no fim e remoção do
+início.
+
+Porque assim como numa fila do cotidiano, o primeiro a chegar é o primeiro a sair (first in, first out)
