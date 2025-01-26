@@ -1,0 +1,4 @@
+4. Tratando-se de pilhas, explique por que é mais conveniente a definição do topo no início e não no final
+da estrutura.
+
+por que em uma pilha, o primeiro item a ser tirado é o do topo, ou seja, no início !
