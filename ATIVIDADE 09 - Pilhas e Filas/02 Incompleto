@@ -8,54 +8,79 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void LimparPrompt();
+typedef struct Node {
+    int vlr;
+    struct Node *prox;
+} node;
 
-int main () {
-    int qtd=0;
+void LimparPrompt();
+node *Inicializar();
+node *Enfileirar(node *fim, int valor, int *qtd);
+node *Desenfileirar(node **inicio, int *qtd);
+void ExibirInicio(node *inicio);
+void ExibirQuantidade(int qtd);
+void Esvaziar(node **inicio, node **fim, int *qtd);
+
+int main() {
+    node *inicio = NULL;
+    node *fim = NULL;
+    int qtd = 0;
     int opcao = 1, valor;
-    while (opcao >= 1 && opcao <=6){
-        printf ("Escolha uma opção :\n");
-        printf ("1 - Inicializar\n");
-        printf ("2 - Enfileirar\n");
-        printf ("3 - Desemfileirar\n");
-        printf ("4 - Exibir elemento do início\n");
-        printf ("5 - Exibir a quantidade de elementos\n");
-        printf ("6 - Esvaziar pilha\n");
-        scanf ("%d", &opcao);
-        
-        switch (opcao){
+
+    while (opcao >= 1 && opcao <= 6) {
+        printf("Escolha uma opção:\n");
+        printf("1 - Inicializar\n");
+        printf("2 - Enfileirar\n");
+        printf("3 - Desenfileirar\n");
+        printf("4 - Exibir elemento do início\n");
+        printf("5 - Exibir a quantidade de elementos\n");
+        printf("6 - Esvaziar fila\n");
+        printf("Opção: ");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
             case 1:
                 LimparPrompt();
-                node* topo = Inicializar();
-                printf ("Fila inicializada !\n");
+                inicio = Inicializar();
+                fim = inicio;
+                qtd = 0;
+                printf("Fila inicializada!\n");
                 break;
             case 2:
+                LimparPrompt();
+                printf("Informe o valor a ser enfileirado: ");
+                scanf("%d", &valor);
+                fim = Enfileirar(fim, valor, &qtd);
+                if (inicio == NULL) {
+                    inicio = fim;
+                }
                 break;
             case 3:
-                
+                LimparPrompt();
+                inicio = Desenfileirar(&inicio, &qtd);
+                if (inicio == NULL) {
+                    fim = NULL;
+                }
                 break;
             case 4:
                 LimparPrompt();
-                
+                ExibirInicio(inicio);
                 break;
             case 5:
-                L
+                LimparPrompt();
+                ExibirQuantidade(qtd);
                 break;
             case 6:
                 LimparPrompt();
-                Esvaziar(&topo);
-                printf ("Fila esvaziada !\n");
-                qtd = 0;
+                Esvaziar(&inicio, &fim, &qtd);
+                printf("Fila esvaziada!\n");
                 break;
+            default:
+                LimparPrompt();
+                printf("Opção inválida! Encerrando programa.\n");
         }
     }
-}
-node *Inicializar (){
-    return NULL;
-}
-
-void Esvaziar(node **topo){
-    *topo = NULL;
+    return 0;
 }
 
 void LimparPrompt() {
@@ -64,4 +89,61 @@ void LimparPrompt() {
     #else
         system("clear");
     #endif
+}
+
+node *Inicializar() {
+    return NULL;
+}
+
+node *Enfileirar(node *fim, int valor, int *qtd) {
+    node *novo = (node *)malloc(sizeof(node));
+    if (novo == NULL) {
+        printf("Erro ao alocar memória!\n");
+        return fim;
+    }
+    novo->vlr = valor;
+    novo->prox = NULL;
+
+    if (fim != NULL) {
+        fim->prox = novo;
+    }
+    (*qtd)++;
+    printf("Valor %d enfileirado!\n", valor);
+    return novo;
+}
+
+node *Desenfileirar(node **inicio, int *qtd) {
+    if (*inicio == NULL) {
+        printf("A fila está vazia!\n");
+        return NULL;
+    }
+
+    node *remover = *inicio;
+    *inicio = remover->prox;
+    printf("Valor %d desenfileirado!\n", remover->vlr);
+    free(remover);
+    (*qtd)--;
+    return *inicio;
+}
+
+void ExibirInicio(node *inicio) {
+    if (inicio == NULL) {
+        printf("A fila está vazia!\n");
+    } else {
+        printf("Elemento no início da fila: %d\n", inicio->vlr);
+    }
+}
+
+void ExibirQuantidade(int qtd) {
+    printf("Quantidade de elementos na fila: %d\n", qtd);
+}
+
+void Esvaziar(node **inicio, node **fim, int *qtd) {
+    while (*inicio != NULL) {
+        node *remover = *inicio;
+        *inicio = remover->prox;
+        free(remover);
+    }
+    *fim = NULL;
+    *qtd = 0;
 }
