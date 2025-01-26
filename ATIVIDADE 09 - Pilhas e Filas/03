@@ -1,0 +1,285 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_SIZE 100
+
+void LimparPrompt();
+
+typedef struct {
+    int dados[MAX_SIZE];
+    int topo;
+} Pilha;
+
+Pilha *Inicializar();
+void Empilhar(Pilha *pilha, int valor);
+int Desempilhar(Pilha *pilha);
+int ExibirTopo(Pilha *pilha);
+int Tamanho(Pilha *pilha);
+void Esvaziar(Pilha *pilha);
+
+int main() {
+    int opcao = 1, valor;
+    Pilha *pilha = NULL;
+
+    while (opcao >= 1 && opcao <= 6) {
+        printf("\nEscolha uma opção:\n");
+        printf("1 - Inicializar\n");
+        printf("2 - Empilhar\n");
+        printf("3 - Desempilhar\n");
+        printf("4 - Exibir elemento do topo\n");
+        printf("5 - Exibir a quantidade de elementos\n");
+        printf("6 - Esvaziar pilha\n");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1:
+                LimparPrompt();
+                pilha = Inicializar();
+                printf("Pilha inicializada!\n");
+                break;
+            case 2:
+                LimparPrompt();
+                if (pilha == NULL) {
+                    printf("Inicialize a pilha antes de empilhar!\n");
+                    break;
+                }
+                printf("Insira o valor a ser empilhado: ");
+                scanf("%d", &valor);
+                Empilhar(pilha, valor);
+                break;
+            case 3:
+                LimparPrompt();
+                if (pilha == NULL || pilha->topo == -1) {
+                    printf("A pilha está vazia ou não foi inicializada!\n");
+                    break;
+                }
+                printf("Elemento %d desempilhado!\n", Desempilhar(pilha));
+                break;
+            case 4:
+                LimparPrompt();
+                if (pilha == NULL || pilha->topo == -1) {
+                    printf("A pilha está vazia ou não foi inicializada!\n");
+                    break;
+                }
+                printf("O elemento do topo é: %d\n", ExibirTopo(pilha));
+                break;
+            case 5:
+                LimparPrompt();
+                if (pilha == NULL) {
+                    printf("Inicialize a pilha para verificar o tamanho!\n");
+                    break;
+                }
+                printf("Essa pilha tem %d elementos.\n", Tamanho(pilha));
+                break;
+            case 6:
+                LimparPrompt();
+                if (pilha == NULL) {
+                    printf("Inicialize a pilha antes de esvaziar!\n");
+                    break;
+                }
+                Esvaziar(pilha);
+                printf("Pilha esvaziada!\n");
+                break;
+            default:
+                LimparPrompt();
+                printf("Opção inválida! Encerrando o programa.\n");
+        }
+    }
+
+    if (pilha != NULL) {
+        free(pilha);
+    }
+
+    return 0;
+}
+
+void LimparPrompt() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
+
+Pilha *Inicializar() {
+    Pilha *pilha = (Pilha *)malloc(sizeof(Pilha));
+    if (pilha != NULL) {
+        pilha->topo = -1;
+    }
+    return pilha;
+}
+
+void Empilhar(Pilha *pilha, int valor) {
+    if (pilha->topo == MAX_SIZE - 1) {
+        printf("A pilha está cheia!\n");
+        return;
+    }
+    pilha->topo++;
+    pilha->dados[pilha->topo] = valor;
+    printf("Elemento %d empilhado!\n", valor);
+}
+
+int Desempilhar(Pilha *pilha) {
+    int valor = pilha->dados[pilha->topo];
+    pilha->topo--;
+    return valor;
+}
+
+int ExibirTopo(Pilha *pilha) {
+    return pilha->dados[pilha->topo];
+}
+
+int Tamanho(Pilha *pilha) {
+    return pilha->topo + 1;
+}
+
+void Esvaziar(Pilha *pilha) {
+    pilha->topo = -1;
+}
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_SIZE 100
+
+typedef struct {
+    int dados[MAX_SIZE];
+    int inicio;
+    int fim;
+    int qtd;
+} Fila;
+
+void LimparPrompt();
+Fila *Inicializar();
+void Enfileirar(Fila *fila, int valor);
+int Desenfileirar(Fila *fila);
+int ExibirInicio(Fila *fila);
+int Tamanho(Fila *fila);
+void Esvaziar(Fila *fila);
+
+int main() {
+    int opcao = 1, valor;
+    Fila *fila = NULL;
+
+    while (opcao >= 1 && opcao <= 6) {
+        printf("\nEscolha uma opção:\n");
+        printf("1 - Inicializar\n");
+        printf("2 - Enfileirar\n");
+        printf("3 - Desenfileirar\n");
+        printf("4 - Exibir elemento do início\n");
+        printf("5 - Exibir a quantidade de elementos\n");
+        printf("6 - Esvaziar fila\n");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1:
+                LimparPrompt();
+                fila = Inicializar();
+                printf("Fila inicializada!\n");
+                break;
+            case 2:
+                LimparPrompt();
+                if (fila == NULL) {
+                    printf("Inicialize a fila antes de enfileirar!\n");
+                    break;
+                }
+                printf("Insira o valor a ser enfileirado: ");
+                scanf("%d", &valor);
+                Enfileirar(fila, valor);
+                break;
+            case 3:
+                LimparPrompt();
+                if (fila == NULL || fila->qtd == 0) {
+                    printf("A fila está vazia ou não foi inicializada!\n");
+                    break;
+                }
+                printf("Elemento %d desenfileirado!\n", Desenfileirar(fila));
+                break;
+            case 4:
+                LimparPrompt();
+                if (fila == NULL || fila->qtd == 0) {
+                    printf("A fila está vazia ou não foi inicializada!\n");
+                    break;
+                }
+                printf("O elemento do início é: %d\n", ExibirInicio(fila));
+                break;
+            case 5:
+                LimparPrompt();
+                if (fila == NULL) {
+                    printf("Inicialize a fila para verificar o tamanho!\n");
+                    break;
+                }
+                printf("Essa fila tem %d elementos.\n", Tamanho(fila));
+                break;
+            case 6:
+                LimparPrompt();
+                if (fila == NULL) {
+                    printf("Inicialize a fila antes de esvaziar!\n");
+                    break;
+                }
+                Esvaziar(fila);
+                printf("Fila esvaziada!\n");
+                break;
+            default:
+                LimparPrompt();
+                printf("Opção inválida! Encerrando o programa.\n");
+        }
+    }
+
+    if (fila != NULL) {
+        free(fila);
+    }
+
+    return 0;
+}
+
+void LimparPrompt() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
+
+Fila *Inicializar() {
+    Fila *fila = (Fila *)malloc(sizeof(Fila));
+    if (fila != NULL) {
+        fila->inicio = 0;
+        fila->fim = -1;
+        fila->qtd = 0;
+    }
+    return fila;
+}
+
+void Enfileirar(Fila *fila, int valor) {
+    if (fila->qtd == MAX_SIZE) {
+        printf("A fila está cheia!\n");
+        return;
+    }
+    fila->fim = (fila->fim + 1) % MAX_SIZE;
+    fila->dados[fila->fim] = valor;
+    fila->qtd++;
+    printf("Elemento %d enfileirado!\n", valor);
+}
+
+int Desenfileirar(Fila *fila) {
+    int valor = fila->dados[fila->inicio];
+    fila->inicio = (fila->inicio + 1) % MAX_SIZE;
+    fila->qtd--;
+    return valor;
+}
+
+int ExibirInicio(Fila *fila) {
+    return fila->dados[fila->inicio];
+}
+
+int Tamanho(Fila *fila) {
+    return fila->qtd;
+}
+
+void Esvaziar(Fila *fila) {
+    fila->inicio = 0;
+    fila->fim = -1;
+    fila->qtd = 0;
+}
